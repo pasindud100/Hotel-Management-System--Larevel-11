@@ -8,40 +8,6 @@
 </head>
 <body>
 
-<div class="container">
-<h3 align="center" class="mt-5">Hotel Management Syste</h3>
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-       
-    <div class="form-area">
-        <form method="post" action="{{route('hotels.store')}}" encrypt="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col-md-6">
-                <label for="">Hotel Name</label>
-                <input type="text" class="form-control" name="name">
-                </div>
-
-                <div class="col-md-6">
-                <label for="">Image</label>
-                <input type="text" class="form-control" name="image">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                <label for="">Description</label>
-                <input type="text" class="form-control" name="description">
-                </div>
-            </div>
-
-        </form>
-    </div>
-    </div>
-
-</div>
-</div>
 
 
 @yield('content')
