@@ -17,4 +17,25 @@ class HotelController extends Controller
         $response['hotels'] = $this->hotel->all();
         return view('hotels.index')->with($response);
     }
+
+    public function store(Request $request){
+        //validtate the request
+        $validateData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'image'=> 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',//adjust file size and allow extentions
+        ]);
+        //check whether image is uploaded correctly
+        if($request->hasFile('image')){
+            //store the image in public/image directory
+            $fileName = $request->file('image')->store('images', 'public');
+            //add 4to file iage to the validated data
+            $validateData['image'] = $fileName;
+        }
+        //create the product
+        Hotel::create($validateData);
+        //redirect back with success message
+        return redirect()->back()->with('success','Hotel created successfully');
+}
 }

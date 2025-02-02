@@ -9,8 +9,8 @@
     <div class="col-md-8">
        
     <div class="form-area">
-        <form method="post"  encrypt="multipart/form-data">
-            @csrf
+    <form method="post" action="{{ route('hotels.store') }}" enctype="multipart/form-data">
+    @csrf
             <div class="row mt-4">
                 <div class="col-md-6">
                 <label for="" class="mb-2">Hotel Name</label>
@@ -62,7 +62,7 @@
     <tbody>
         @foreach ($hotels as $key => $hotel)
         <tr>
-            <td>{{ $loop->iteration }}</td>
+            <td>{{++$key }}</td>
             <td>{{ $hotel->name }}</td>
             <td>
                 <img src="{{ asset('storage/' . $hotel->image) }}" class="img img-responsive" width="250px" height="250px">
@@ -70,14 +70,14 @@
             <td>{{ $hotel->description }}</td>
             <td>{{ $hotel->status }}</td>
             <td>
-                <a href="{{ route('hotels.edit', $hotel->id) }}">
+                <!-- <a href="{{ route('hotels.update', $hotel->id) }}">
                     <button class="btn btn-primary btn-sm">Edit</button>
-                </a>
-                <form action="{{ route('hotels.destroy', $hotel->id) }}" method="post" style="display:inline">
+                </a> -->
+                <!-- <form action="{{ route('hotels.destroy', $hotel->id) }}" method="post" style="display:inline">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                </form>
+                </form> -->
             </td>
         </tr>
         @endforeach
