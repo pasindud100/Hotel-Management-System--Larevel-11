@@ -9,33 +9,70 @@ class HotelController extends Controller
 {
     protected $hotel;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->hotel = new Hotel();
     }
 
-    public function index(){
+    // get all hotels to display in the table
+    public function index()
+    {
         $response['hotels'] = $this->hotel->all();
         return view('hotels.index')->with($response);
     }
 
-    public function store(Request $request){
-        //validtate the request
+    // this for tore a new hotel
+    public function store(Request $request)
+    {
+        // 
+        // validate the request
         $validateData = $request->validate([
             'name' => 'required',
             'description' => 'required',
             'status' => 'required',
-            'image'=> 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',//adjust file size and allow extentions
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        //check whether image is uploaded correctly
-        if($request->hasFile('image')){
-            //store the image in public/image directory
+
+        // checking  an image is uploaded
+        if ($request->hasFile('image')) {
+            // this store the image in the public/images file
             $fileName = $request->file('image')->store('images', 'public');
-            //add 4to file iage to the validated data
             $validateData['image'] = $fileName;
         }
-        //create the product
+
+        // create the hotel
         Hotel::create($validateData);
-        //redirect back with success message
-        return redirect()->back()->with('success','Hotel created successfully');
-}
+        // sending back with success message
+        return redirect()->route('hotels.index')->with('success', 'Hotel created successfully');
+    }
+
+    // thi edit a hotel
+    public function edit($id)
+    {
+        $hotel = Hotel::findOrFail($id);
+        return view('hotels.edit', compact('hotel'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $hotel = Hotel::findOrFail($id);
+        $validateData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $fileName = $request->file('image')->store('images', 'public');
+            $validateData['image'] = $fileName;
+        }
+
+        // update the hotel
+        $hotel->update($validateData);
+        return redirect()->route('hotels.index')->with('success', 'Hotel updated successfully');
+    }
+
+   
 }
