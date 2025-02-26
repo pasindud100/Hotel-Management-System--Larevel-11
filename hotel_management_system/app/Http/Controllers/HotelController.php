@@ -74,5 +74,11 @@ class HotelController extends Controller
         return redirect()->route('hotels.index')->with('success', 'Hotel updated successfully');
     }
 
-   
+    // Delete 
+    public function destroy($id)
+    {
+        $hotel = Hotel::findOrFail($id);
+        $hotel->delete();
+        return redirect()->route('hotels.index')->with('success', 'Hotel deleted successfully');
+    }
 }

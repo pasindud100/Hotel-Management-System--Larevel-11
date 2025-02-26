@@ -11,3 +11,4 @@ Route::post('storehotel', [HotelController::class, 'store'])->name('hotels.store
 Route::get('allhotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('edit-hotel/{id}', [HotelController::class, 'edit'])->name('hotels.edit');
 Route::post('updatehotel/{id}', [HotelController::class, 'update'])->name('hotels.update');
+Route::delete('deletehotel/{id}', [HotelController::class, 'destroy'])->name('hotels.destroy');
