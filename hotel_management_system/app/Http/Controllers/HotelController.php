@@ -21,10 +21,9 @@ class HotelController extends Controller
         return view('hotels.index')->with($response);
     }
 
-    // this for tore a new hotel
+    // this for store a new hotel
     public function store(Request $request)
     {
-        // 
         // validate the request
         $validateData = $request->validate([
             'name' => 'required',

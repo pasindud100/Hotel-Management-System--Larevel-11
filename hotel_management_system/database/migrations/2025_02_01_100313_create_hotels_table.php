@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // relationship.one to many..one hotel has many rooms
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
