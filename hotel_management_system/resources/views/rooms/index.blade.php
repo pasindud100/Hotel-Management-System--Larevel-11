@@ -33,7 +33,7 @@
                     <div class="col-md-4">
                         <label for="">Hotel</label><br>
                         <select name="hotel_id" id="hotel_id" class="form-control">
-                            @foreach ($hotels as $id =>$hotel )
+                            @foreach ($hotels as $id =>$name )
                                 <option value="{{$id}}">{{$name}}</option>    
                             @endforeach
                         </select>
@@ -62,28 +62,33 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Image</th>
+                        <th>Room Name</th>
                         <th>Description</th>
+                        <th>Image</th>
+                        <th>Hotel Name</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($hotels as $key => $hotel)
+                    {{-- rooms from response room in the indec() method in the roomcontroller --}}
+                    @foreach ($rooms as $key => $room)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $hotel->name }}</td>
+                        <td>{{ $room->name }}</td>
+                        <td>{{ $room->description }}</td>
+
                         <td>
-                            <img src="{{ asset('storage/' . $hotel->image) }}" class="img img-responsive" width="150px" height="150px">
+                            <img src="{{ asset('storage/' . $room->image) }}" class="img img-responsive" width="150px" height="150px">
                         </td>
-                        <td>{{ $hotel->description }}</td>
-                        <td>{{ $hotel->status ? 'Active' : 'Deactive' }}</td>
+
+                        <td>{{ $room->hotel->name }}</td>
+                        <td>{{ $room->status }}</td>
                         <td>
-                            <a href="{{ route('hotels.edit', $hotel->id) }}">
+                            <a href="{{ route('hotels.edit', $room->id) }}">
                                 <button class="btn btn-primary btn-sm">Edit</button>
                             </a>
-                            <form action="{{ route('hotels.destroy', $hotel->id) }}" method="post" style="display:inline">
+                            <form action="{{ route('hotels.destroy', $room->id) }}" method="post" style="display:inline">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm" type="submit">Delete</button>

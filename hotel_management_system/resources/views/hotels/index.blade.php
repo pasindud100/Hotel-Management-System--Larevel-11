@@ -46,7 +46,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Room Name</th>
                         <th>Image</th>
                         <th>Description</th>
                         <th>Status</th>

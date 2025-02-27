@@ -17,7 +17,7 @@ Route::delete('deletehotel/{id}', [HotelController::class, 'destroy'])->name('ho
 
 // room routes
 Route::post('storeroom', [RoomController::class, 'store'])->name('rooms.store');
-Route::get('allroom', [RoomController::class, 'index'])->name('index');
+Route::get('allrooms', [RoomController::class, 'index'])->name('index');
  Route::post('updateroom/{id}', [RoomController::class, 'update'])->name('update');
 Route::delete('deleteroom/{id}', [RoomController::class, 'destroy'])->name('destroy');
 

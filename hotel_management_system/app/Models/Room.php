@@ -14,5 +14,11 @@ class Room extends Model
     protected $fillable = ['name', 'description', 'image','qty','hotel_id','status'];
 
 
+
+    // tjis is many side of the one(hotel) to many(rooms) relationshil
+    public function hotel(){
+        return $this->belongsTo(Hotel::class, 'hotel_id');
+    }
+
     use HasFactory;
 }
