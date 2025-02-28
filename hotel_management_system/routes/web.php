@@ -20,7 +20,7 @@ Route::delete('deletehotel/{id}', [HotelController::class, 'destroy'])->name('ho
 
 // room routes
 Route::post('storeroom', [RoomController::class, 'store'])->name('rooms.store');
-Route::get('allrooms', [RoomController::class, 'index'])->name('index');
- Route::post('updateroom/{id}', [RoomController::class, 'update'])->name('update');
-Route::delete('deleteroom/{id}', [RoomController::class, 'destroy'])->name('destroy');
-
+Route::get('allrooms', [RoomController::class, 'index'])->name('rooms.index'); // list all rooms
+Route::get('editroom/{id}', [RoomController::class, 'edit'])->name('rooms.edit'); // this route for edit a specific room
+Route::post('updateroom/{id}', [RoomController::class, 'update'])->name('rooms.update'); // for update a specific room
+Route::delete('deleteroom/{id}', [RoomController::class, 'destroy'])->name('rooms.destroy'); 

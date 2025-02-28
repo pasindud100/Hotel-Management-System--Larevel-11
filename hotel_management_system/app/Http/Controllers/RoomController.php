@@ -8,86 +8,82 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    
-
-    protected $room;
-
-    public function __construct()
-    {
-        $this->room = new Room();
-    }
-
-    // get all rooms to display in the table
+    // get all rooms
     public function index()
     {
-        $rooms = $this->room->all();
-        $hotels = Hotel::pluck('name', 'id');
+        $rooms = Room::all();
+        $hotels = Hotel::pluck('name', 'id'); 
 
-        return view('rooms.index', compact('rooms','hotels'));
-
+        return view('rooms.index', compact('rooms', 'hotels'));
     }
 
-    // this for store a new hotel
+    // creating a new room
+    public function create()
+    {
+        $hotels = Hotel::pluck('name', 'id');
+        return view('rooms.create', compact('hotels'));
+    }
+
+    // Store a new room
     public function store(Request $request)
     {
-        // validate the request
+        // validting the request
         $validateData = $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'qty'=>'required',
-            'hotel_id'=>'required',
+            'qty' => 'required',
+            'hotel_id' => 'required',
             'status' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // checking  an image is uploaded
+        // check image is uploaded is not
         if ($request->hasFile('image')) {
-            // this store the image in the public/images file
             $fileName = $request->file('image')->store('images', 'public');
             $validateData['image'] = $fileName;
         }
-
-        // create the hotel
         Room::create($validateData);
-        // sending back with success message
-        return redirect()->back()->with('success', 'Room
-         created successfully');
+        return redirect()->route('rooms.index')->with('success', 'Room created successfully');
     }
 
-    // thi edit a hotel
+    // this for the form for editing a room
     public function edit($id)
     {
-        $hotel = Hotel::findOrFail($id);
-        return view('hotels.edit', compact('hotel'));
+        $room = Room::findOrFail($id);
+        $hotels = Hotel::pluck('name', 'id'); // get hotels for the dropdown
+        return view('rooms.edit', compact('room', 'hotels'));
     }
 
-
+    // update a room
     public function update(Request $request, $id)
     {
-        $hotel = Hotel::findOrFail($id);
+        $room = Room::findOrFail($id);
+    
         $validateData = $request->validate([
             'name' => 'required',
             'description' => 'required',
+            'qty' => 'required',
+            'hotel_id' => 'required',
             'status' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
+    
         if ($request->hasFile('image')) {
             $fileName = $request->file('image')->store('images', 'public');
             $validateData['image'] = $fileName;
         }
-
-        // update the hotel
-        $hotel->update($validateData);
-        return redirect()->route('hotels.index')->with('success', 'Hotel updated successfully');
+    
+        $room->update($validateData);
+    
+        // redirect  to the edit page with success message whwnedit success
+        return redirect()->route('rooms.index')->with('success', 'Room updated successfully');
     }
 
-    // Delete 
+    // this for delete a room
     public function destroy($id)
     {
-        $hotel = Hotel::findOrFail($id);
-        $hotel->delete();
-        return redirect()->route('hotels.index')->with('success', 'Hotel deleted successfully');
+        $room = Room::findOrFail($id);
+        $room->delete();
+        return redirect()->route('rooms.index')->with('success', 'Room deleted successfully');
     }
-    
 }

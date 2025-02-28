@@ -6,7 +6,8 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <div class="form-area">
+            <!-- add new room form -->
+            <div class="form-area mb-4">
                 <form method="post" action="{{ route('rooms.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row mt-4">
@@ -29,18 +30,14 @@
                             <input type="number" class="form-control" name="qty" required>
                         </div>
                     </div>
-                    {{-- get hotels from hotel table --}}
                     <div class="col-md-4">
                         <label for="">Hotel</label><br>
-                        <select name="hotel_id" id="hotel_id" class="form-control">
-                            @foreach ($hotels as $id =>$name )
-                                <option value="{{$id}}">{{$name}}</option>    
+                        <select name="hotel_id" id="hotel_id" class="form-control" required>
+                            @foreach ($hotels as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
                             @endforeach
                         </select>
                     </div>
-
-
-
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <label>Status</label>
@@ -52,12 +49,14 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 mt-4">
-                                <input type="submit" class="btn btn-primary" value="Register">
+                                <input type="submit" class="btn btn-primary" value="Add Room">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
+
+            <!-- table with existing rooms -->
             <table class="table table-dark mt-5">
                 <thead>
                     <tr>
@@ -71,24 +70,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- rooms from response room in the indec() method in the roomcontroller --}}
                     @foreach ($rooms as $key => $room)
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $room->name }}</td>
                         <td>{{ $room->description }}</td>
-
                         <td>
                             <img src="{{ asset('storage/' . $room->image) }}" class="img img-responsive" width="150px" height="150px">
                         </td>
-
                         <td>{{ $room->hotel->name }}</td>
-                        <td>{{ $room->status }}</td>
+                        <td>{{ $room->status ? 'Active' : 'Deactive' }}</td>
                         <td>
-                            <a href="{{ route('hotels.edit', $room->id) }}">
+                            <a href="{{ route('rooms.edit', $room->id) }}">
                                 <button class="btn btn-primary btn-sm">Edit</button>
                             </a>
-                            <form action="{{ route('hotels.destroy', $room->id) }}" method="post" style="display:inline">
+                            <form action="{{ route('rooms.destroy', $room->id) }}" method="post" style="display:inline" onsubmit="return confirm('Are you sure you want to delete this room?');">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm" type="submit">Delete</button>
