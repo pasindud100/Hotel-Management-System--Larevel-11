@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Hotel extends Model
 {
     protected $table = 'hotels';
-    protected $primaryKey = 'id'; // Fix capitalization
+    protected $primaryKey = 'id'; 
 
     protected $fillable = ['name', 'image', 'description', 'status'];
 

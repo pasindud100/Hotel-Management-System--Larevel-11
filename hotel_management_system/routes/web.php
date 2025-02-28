@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HotelController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+//Home
+Route::get('/', [HomeController::class, 'index']);
 
 // hotel routes
 Route::post('storehotel', [HotelController::class, 'store'])->name('hotels.store');
