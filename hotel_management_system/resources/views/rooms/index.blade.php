@@ -3,6 +3,9 @@
 @section('content')
 <div class="container">
     <h2 align="center" class="mt-5">Room Management</h2>
+    <hr>
+    <h2 align="center" class="mt-5">Add Room</h2>
+
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
@@ -60,7 +63,7 @@
             <table class="table table-dark mt-5">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Id</th>
                         <th>Room Name</th>
                         <th>Description</th>
                         <th>Image</th>
